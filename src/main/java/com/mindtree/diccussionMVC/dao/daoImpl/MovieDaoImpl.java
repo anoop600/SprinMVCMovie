@@ -27,7 +27,20 @@ public class MovieDaoImpl implements MovieDao {
 
 	public List<Movie> getAllMovie() throws DaoException {
 		try {
-			return hibernateTemplate.loadAll(Movie.class);
+			//return hibernateTemplate.loadAll(Movie.class);
+			List<Movie> list = hibernateTemplate.loadAll(Movie.class);
+			
+			//Comparator
+			Comparator<Movie> comp = new Comparator<Movie>() {
+
+				@Override
+				public int compare(Movie arg0, Movie arg1) {
+					Long arg = arg0.getBoxoffice();
+					return arg.compareTo(arg1.getBoxoffice()) * -1;
+				}
+			};
+			Collections.sort(list, comp);
+			return list;
 		} catch (DataAccessException e) {
 			throw new DaoException("Movie list cannot be obtained", e);
 		}
