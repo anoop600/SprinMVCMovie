@@ -53,6 +53,9 @@ public class Controller {
 		if (bindingResult.hasErrors()) {
 			return new ModelAndView("index", "message", "Unsuccessfull");
 		}
+		
+		if(actor.getAge()<14)
+			return new ModelAndView("index", "message", "Age Less Than 14 Error");
 
 		System.out.println(actor);
 		try {
